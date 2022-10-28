@@ -1,0 +1,22 @@
+{
+  "name": "employee-registry",
+  "version": "1.0.0",
+  "description": "an employee management",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mahdi3100/Employee-Registry.git"
+  },
+  "keywords": [
+    "Employee-Registry"
+  ],
+  "author": "Leo Mehdi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mahdi3100/Employee-Registry/issues"
+  },
+  "homepage": "https://github.com/mahdi3100/Employee-Registry#readme"
+}
