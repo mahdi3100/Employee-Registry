@@ -34,6 +34,9 @@ docker build -t myemployee .
 docker run -p 8787:8787 -it myemployee
 ``` 
 
+# ENV file
+
+You may edit PORT and REACT_APP_API_BASE_URL for deploying on "Play with Docker"
 
 ## Tree
 
