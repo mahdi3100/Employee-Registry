@@ -42,7 +42,7 @@ function BoxSignUp({ showSignup, setShowSignup }) {
             <div className="modal-content">
                 <Box style={{ width: 400, margin: 'auto' }}>
                 <Suspense fallback={ <div className="loader is-centered is-loading" style={{ margin: "20px auto", height: "70px", width: "70px" }}></div>}>
-                <Signup loggedUser={true} SignUpSucceed={(newUser) => SignUpSucceed(newUser)} />
+                <Signup createditUser="create" CreateUpdateSucceed={(newUser) => SignUpSucceed(newUser)} />
                 </Suspense>
                 
                 </Box>

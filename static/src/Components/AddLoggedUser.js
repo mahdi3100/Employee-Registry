@@ -14,7 +14,7 @@ function AddLoggedUser(props) {
 
     if (elementUser.length != 0) {//initial state 
 
-      props.moreUsers(elementUser)
+      props.setUsers(elementUser)
       // setMyUser([])//initialize
     }
 

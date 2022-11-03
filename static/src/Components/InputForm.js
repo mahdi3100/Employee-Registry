@@ -75,7 +75,7 @@ function InputFrom(props) {
             <Form.Control>
                 <Form.Input rounded
                     placeholder={placeholder}
-
+                    
                     type={type}
                     name={name}
                     color={colorvalue}

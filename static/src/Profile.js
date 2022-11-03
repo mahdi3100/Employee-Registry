@@ -1,6 +1,6 @@
 import React from 'react';
 import Profile from './Views/Profile';
-
+import { UserContextProvider } from "./Context/AddUserContext";
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
@@ -11,8 +11,10 @@ import HeaderLoggedUser from './Components/HeaderLoggedUser.js';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <><HeaderLoggedUser loc="profile" />
-
-        <Profile /></>
+   <UserContextProvider>
+   <Profile />
+   </UserContextProvider>
+        </>
 
 
 

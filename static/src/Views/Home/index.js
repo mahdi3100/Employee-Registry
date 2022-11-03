@@ -85,7 +85,7 @@ class Home extends React.Component {
                                         </Notification>
                                         :
                                         <>
-                                            <AddLoggedUser moreUsers={(users) => { this.updateUsers(users) }} />
+                                            <AddLoggedUser setUsers={(users) => { this.updateUsers(users) }} />
                                             <Employees usersInfo={this.state.usersInfo} />
                                         </>
                                 }

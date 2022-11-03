@@ -20,7 +20,7 @@ const client = new MongoClient(uri,
 
 
 class mydb {
-  
+
   //Save DB instance as class attribute 
   connectDB = null;
 
@@ -47,23 +47,23 @@ class mydb {
 
       (async () => {
         try {
-        
+
           const user = await this.connectDB.collection("users");
 
-       
 
 
-          user.find({}, { projection: { comments: 0 } }).sort({ _id: -1 }).toArray(function (err, result) {
+
+          user.find({}, { projection: { passowrd: 0, comments: 0 } }).sort({ _id: -1 }).toArray(function (err, result) {
             if (err) reject(err);
             resolve(result)
-        
+
           });
 
 
 
 
         } catch (err) {
-          
+
           console.log(err)
           reject(err)
 
@@ -77,21 +77,32 @@ class mydb {
   /**
    * 
    * @param {Object} datauser 
+   * @param {String} creatededit "create"| "update"
+   * @param {String} EditUsernameProfile Null | "username"
    * @returns 
    */
-  insert(datauser) {
+  insertUpdateUser(datauser, creatededit, EditUsernameProfile) {
     return new Promise((resolve, reject) => {
-     
+
       (async () => {
         try {
-          
+
           const user = await this.connectDB.collection("users");
 
-       
+          if (creatededit == "update") {
+            let result = await user.updateOne(
+              { username: EditUsernameProfile },
+              { $set: datauser }
+
+            )
+
+            return resolve(datauser)
+            //return is mondatory
+          }
+
 
           //Add document into users collection for that sepecif new user
           datauser["comments"] = []
-
           //Insert user into users collection
           let result = await user.insertOne(datauser)
 
@@ -117,7 +128,7 @@ class mydb {
    */
   insertCSV(dataCSV) {
     return new Promise((resolve, reject) => {
-     
+
       (async () => {
         try {
 
@@ -127,7 +138,7 @@ class mydb {
 
 
         } catch (err) {
-         
+
           console.log(err)
           reject(err)
 
@@ -150,7 +161,7 @@ class mydb {
 
           const user = await this.connectDB.collection("users");
 
-        
+
 
           let query = {
             $and: [
@@ -158,13 +169,13 @@ class mydb {
             ]
           }
           let result = await user.findOne(query)
-      
+
 
           resolve(result)
 
 
         } catch (err) {
-         
+
           console.log(err)
           reject(err)
 
@@ -182,13 +193,13 @@ class mydb {
    */
   inserComment(comment, username, adminUsername) {
     return new Promise((resolve, reject) => {
-     
+
       (async () => {
         try {
 
           const user = await this.connectDB.collection("users");
 
-        
+
 
           let getDate = new Date();
           let result = await user.update({ username: username }, {
@@ -208,7 +219,7 @@ class mydb {
 
 
         } catch (err) {
-         
+
           console.log(err)
           reject(err)
 
@@ -229,19 +240,19 @@ class mydb {
 
           const user = await this.connectDB.collection("users");
 
-      
+
 
           let query = { username: { $eq: username } }
 
 
           let result = await user.deleteOne(query)
 
-         
+
           resolve(result)
 
 
         } catch (err) {
-          
+
           console.log(err)
           reject(err)
 
@@ -262,7 +273,7 @@ class mydb {
 
           const user = await this.connectDB.collection("users");
 
-      
+
 
           let query = {
             $and: [
@@ -277,7 +288,7 @@ class mydb {
 
 
         } catch (err) {
-          
+
           console.log(err)
           reject(err)
 
@@ -285,7 +296,7 @@ class mydb {
       })()
     })
   }
-  
+
 }
 
 

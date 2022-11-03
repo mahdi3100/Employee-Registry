@@ -7,8 +7,13 @@ import InputForm from "../../Components/InputForm";
 
 class Signup extends React.Component {
 
-  //const [formerror, setFormerror] = useState("");
-  //const [fetchloader, setFetchloader] = useState(false);
+  /**
+   * 
+   * @param {*} props
+   * edituser from editButton
+   * CreateUpdateSucceed 
+   * createditUser
+   */
   constructor(props) {
     super(props)
 
@@ -16,6 +21,8 @@ class Signup extends React.Component {
       formerror: "",
       fetchloader: false
     }
+
+
     this.form = {
       username: null,
       firstname: null,
@@ -33,22 +40,32 @@ class Signup extends React.Component {
 
   submit() {
 
-    console.log(this.form)
-    for (const [key, value] of Object.entries(this.form)) {
-      if (key == "address" || key == "email") continue
-      if (value == null) {
+    if (this.props.createditUser != "update") {
+      for (const [key, value] of Object.entries(this.form)) {
+        if (key == "address" || key == "email") continue
+        if (value == null) {
 
-        this.setState({ formerror: `Please fill the field ${key}` })
+          this.setState({ formerror: `Please fill the field ${key}` })
 
-        return;
+          return;
+        }
       }
     }
 
+
     let baseURL = process.env.REACT_APP_API_BASE_URL || 'localhost:8787';
+
+    /** 
+     * this.props.createditUser == update=> EditUserProfile = username of Prfoile that should be updated
+     * this.props.createditUser == create => new profile ; EditUserProfile == null
+     * 
+     */
+    let EditUserProfile = this.props.edituser?.username || null
+
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ user: this.form, createdUser: this.props.loggedUser })
+      body: JSON.stringify({ user: this.form, createditUser: this.props.createditUser, EditUserProfile: EditUserProfile })
     };
 
     this.setState({ fetchloader: true });
@@ -68,10 +85,16 @@ class Signup extends React.Component {
           return location.href = res['redirect'];
         }
 
-        if (this.props.loggedUser) {
+        if (this.props.createditUser) {
 
-          this.props.SignUpSucceed(res)
+          this.props.CreateUpdateSucceed(res)
           this.setState({ fetchloader: false });
+
+          //if admin edit his own profile
+          if (EditUserProfile == localStorage.getItem('username')) {
+            localStorage.setItem('username', this.form.username)
+          }
+
         } else {
           localStorage.setItem('username', this.form.username);
           location.href = "/home";
@@ -137,14 +160,20 @@ class Signup extends React.Component {
             loading={this.state.fetchloader}
             fullwidth rounded color="primary" onClick={() => this.submit()}>
             {
-              (!this.props.loggedUser && <span>Register</span> || <span>Create new user</span>)
+              (!this.props.createditUser && <span>Register</span> ||
+                (
+                  (this.props.createditUser == "create" && <span>Create new user</span>)
+                  ||
+                  (this.props.createditUser == "update" && <span>Update</span>)
+                )
+              )
             }
           </Button>
         </Button.Group>
         <Form.Help color="danger">{this.state.formerror}</Form.Help>
 
         {
-          (!this.props.loggedUser && <Button fullwidth rounded color="link"
+          (!this.props.createditUser && <Button fullwidth rounded color="link"
 
             onClick={this.props.onClick}>I already have an account</Button>)
         }

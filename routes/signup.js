@@ -1,11 +1,12 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
+/* Signup / Update / Create  User. */
 router.post('/', function (req, res, next) {
 
   //add check sesssion
-  if (req.body.createdUser && !req.session.user) {
+
+  if (req.body.createditUser && !req.session.user) {
     return res.json({ error: 2, redirect: "auth" })// res.redirect("/auth")
   }
 
@@ -42,10 +43,28 @@ router.post('/', function (req, res, next) {
   if (!fromValidate.address) {
     fromValidate.address = "N/A"
   }
+  console.log(req.body.createditUser)
+  console.log(fromValidate)
 
-  req.dbPOOL.insert(fromValidate).then((result) => {
+  //if the operation is update then must have the username of the profile as paramater
+  let EditUsernameProfile = req.body.EditUserProfile || null
+  if (req.body.createditUser == "update" && !req.body.EditUserProfile) {
+    return res.json({ error: 2, redirect: "auth" })
+  }
 
-    req.session.user = fromValidate;
+  req.dbPOOL.insertUpdateUser(fromValidate, req.body.createditUser, EditUsernameProfile).then((result) => {
+
+    //check if is the admin who changed his own info to update sesiion
+
+    if (EditUsernameProfile == req.session.user?.username) {
+      req.session.user = fromValidate;
+    }
+
+    //if admin create another user no need to set up his session
+    if (!req.body.createditUser) {
+      req.session.user = fromValidate;
+    }
+
     res.json(fromValidate);
 
   }).catch((err) => {

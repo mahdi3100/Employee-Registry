@@ -4,7 +4,8 @@ import { Icon as Iconify } from '@iconify/react';
 import { Block, Icon, Content, Form, Heading, Card } from "react-bulma-components";
 import InsertComment from "../../Components/InsertComment"
 import Comments from "../../Components/Comments"
-
+import ButtonEdditUser from "../../Components/ButtonEdditUser";
+import AddLoggedUser from "../../Components/AddLoggedUser";
 
 class Profile extends React.Component {
 
@@ -20,6 +21,7 @@ class Profile extends React.Component {
 
     }
     this.addNewComment = this.addNewComment.bind(this);
+
     this.getOneUser = this.getOneUser.bind(this);
   }
 
@@ -54,9 +56,9 @@ class Profile extends React.Component {
 
         if (res["error"] == 2) {
           return window.location.href = res['redirect'];
+
         }
-        console.log("COOOOOOOOOOOOOOOOOO")
-        console.log(res.comments)
+
 
         this.setState({ userInfo: res, fetched: true, comments: res.comments });
 
@@ -76,14 +78,12 @@ class Profile extends React.Component {
             <div className="loader is-centered is-loading" style={{ margin: "20px auto", height: "70px", width: "70px" }}></div>
             : <>
 
-              <Form.Field style={{ textAlign: "center" }}>
-                <Form.Control>
 
-                  <a className="button is-centered is-danger" href={`/deleteuser?username=${this.state.userInfo.username}`}>Delete User</a>
 
-                </Form.Control>
+              <ButtonEdditUser userInfo={this.state.userInfo} />
+              <AddLoggedUser setUsers={(user) => { this.setState({ userInfo: user }) }} />
 
-              </Form.Field>
+
               <Card style={{ margin: '10px auto' }} >
                 <Card.Content>
                   <Content>

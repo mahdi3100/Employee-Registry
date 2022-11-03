@@ -20,6 +20,7 @@ router.get('/', function (req, res, next) {
 router.get('/:username', function (req, res, next) {
 
   //add check sesssion
+  
   if (!req.session.user) {
     return res.json({ error: 2, redirect: "auth" })// res.redirect("/auth")
   }
