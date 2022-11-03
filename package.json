@@ -1,7 +1,8 @@
 {
-  "name": "server",
-  "version": "0.0.0",
-  "private": true,
+"name": "employee-registry",
+"version": "1.0.0",
+"description": "an employee management",
+"main": "index.js",
   "scripts": {
     "start": "nodemon ./bin/www"
   },
@@ -21,5 +22,20 @@
     "mongodb": "^4.11.0",
     "morgan": "~1.9.1",
     "nodemon": "^2.0.20"
-  }
+  },
+
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mahdi3100/Employee-Registry.git"
+  },
+  "keywords": [
+    "Employee-Registry"
+  ],
+  "author": "Leo Mehdi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mahdi3100/Employee-Registry/issues"
+  },
+  "homepage": "https://github.com/mahdi3100/Employee-Registry#readme"
+
 }
